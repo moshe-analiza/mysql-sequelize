@@ -1,3 +1,4 @@
+// RiddleModel.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../db.js';
 
@@ -19,4 +20,6 @@ const Riddle = sequelize.define('Riddle', {
   timestamps: false,     // אם אין createdAt / updatedAt
 });
 
+
+Riddle.sync();
 export default Riddle;
