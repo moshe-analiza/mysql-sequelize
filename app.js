@@ -2,7 +2,7 @@ import express from 'express';
 import configRoutes from './routes/configRoutes.js';
 import { config } from 'dotenv';
 config();
-
+import "./models/Product.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 

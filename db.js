@@ -3,19 +3,14 @@ import { Sequelize } from 'sequelize';
 import { createConnection } from 'mysql2/promise';
 import { config } from 'dotenv';
 config();
+await syncDB();
+const sequelize = new Sequelize("riddles", "root", "", {
+    dialect: "mysql",
+    host: "localhost",
+    logging: false
+})
 
-const sequelize = new Sequelize(
-    process.env.DB_NAME || "riddles",
-    process.env.DB_USER || "root",
-    process.env.DB_PASS || "",
-    {
-        dialect: 'mysql',
-        logging: false,
-        port: Number(process.env.DB_PORT) || 3306,
-        host: process.env.DB_HOST || "localhost",
-    },
-);
-sequelize.sync();
+sequelize.sync(); 
 sequelize.authenticate().then(() => {
     console.log("Connect to DB");
 }).catch(err => {
@@ -26,12 +21,12 @@ sequelize.authenticate().then(() => {
 async function syncDB() {
     try {
         const connection = await createConnection({
-            host: process.env.DB_HOST || "localhost",
-            user: process.env.DB_USER || "root",
-            password: process.env.DB_PASS || "",
+            host: "localhost",
+            user: "root",
+            password: "",
         });
-        const [data] = await connection.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME || "riddles"}\`;`)
-        console.log(`Database ${process.env.DB_NAME || "riddles"} created or already exists.`);
+        const [data] = await connection.query(`CREATE DATABASE IF NOT EXISTS \`${"riddles"}\`;`)
+        console.log(`Database ${"riddles"} created or already exists.`);
     } catch (err) {
         console.log(err);
     }
